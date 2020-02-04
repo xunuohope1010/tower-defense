@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Bean;
 using UnityEngine;
 
 public static class AStar
 {
+    /*
+     * nodes is dict, includes Point(key), Node(value)
+     */
     private static Dictionary<Point, Node> nodes;
 
     private static void CreateNodes()
@@ -17,7 +21,10 @@ public static class AStar
             nodes.Add(tile.GridPosition, new Node(tile));
         }
     }
-
+    /*
+     * generate path (main part)
+     * giving start point/end point
+     */
     public static Stack<Node> GetPath(Point start, Point goal)    // TODO - return something
     {
         if (nodes == null)
@@ -26,18 +33,29 @@ public static class AStar
         }
 
         HashSet<Node> openList = new HashSet<Node>(), closedList = new HashSet<Node>();
-
+        /*
+         * finalPath, stack, init
+         */
         Stack<Node> finalPath = new Stack<Node>();  // class that adds data values in a stacking fashion, enables backtracking without recursion
-
+        /*
+     * nodes is dict, includes Point(key), Node(value)
+         * start(Point, key)
+         * nodes[starts] means Node
+     */
         Node currentNode = nodes[start];
         openList.Add(currentNode);  // add the start node to the open list
-        
+        /*
+         * AStar
+         */
         while (openList.Count > 0)
         {
             for (int x = -1; x <= 1; x++)
             {
                 for (int y = -1; y <= 1; y++)
                 {
+                    /*
+                     * neighborPos(Point)
+                     */
                     Point neighborPos = new Point(currentNode.GridPosition.x + x, currentNode.GridPosition.y + y); ;
 
                     // look at the node's neighbors, ignore unwalkable nodes
@@ -90,13 +108,24 @@ public static class AStar
                 while (currentNode.GridPosition != start)
                 {
                     finalPath.Push(currentNode);
+                    /*
+                     * print x,y of currentNode, many currentNodes
+                     */
+                    // Debug.Log(currentNode.GridPosition.x+" "+currentNode.GridPosition.y);
+
                     currentNode = currentNode.Parent;
                 }
-
+                /*
+                 * finalPath, return
+                 */
+                
                 return finalPath;
             }
         }
 
+        /*
+         * end of AStar
+         */
         return null;
         /****THIS IS ONLY FOR DEBUGGING NEEDS TO BE REMOVED LATER!****/
         // GameObject.Find("AStarDebugger").GetComponent<AStarDebugger>().DebugPath(openList, closedList, finalPath);

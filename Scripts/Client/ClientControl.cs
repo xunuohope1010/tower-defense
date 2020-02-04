@@ -2,6 +2,8 @@ using System;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using Bean;
+using UnityEngine;
 
 
 public class ClientControl
@@ -27,18 +29,10 @@ public class ClientControl
     {
         while (true)
         {
-            try
-            {
-                byte[] msg = new byte[1024];
-                int msgLen = clientSocket.Receive(msg);
-                Console.WriteLine("server says: " + Encoding.UTF8.GetString(msg, 0, msgLen));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Server disconnect");
-                break;
-                // throw;
-            }
+            byte[] msg = new byte[1024];
+            int msgLen = clientSocket.Receive(msg);
+            // Debug.Log("server says: " + Encoding.UTF8.GetString(msg, 0, msgLen));
+            InputQueue.parse(Encoding.UTF8.GetString(msg, 0, msgLen));
         }
     }
 

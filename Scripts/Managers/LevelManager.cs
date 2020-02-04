@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bean;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
@@ -22,9 +23,18 @@ public class LevelManager : Singleton<LevelManager>
 
     private Point mapSize;
 
+    /*
+     * path (stack)
+     */
     private Stack<Node> path;
+    /*
+     * get/set of path
+     */
     public Stack<Node> Path
     {
+        /*
+         * get path
+         */
         get
         {
             if (path == null)
@@ -128,8 +138,16 @@ public class LevelManager : Singleton<LevelManager>
         return position.x >= 0 && position.y >= 0 && position.x < mapSize.x && position.y < mapSize.y;
     }
 
+    /*
+     * generate path using Astar
+     */
     public void GeneratePath()
     {
+        /*
+         * return finalPath (stack)
+         */
         path = AStar.GetPath(BlueSpawn, RedSpawn);
+        OutputQueue.finalPath = path;
+
     }
 }

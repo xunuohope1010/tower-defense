@@ -104,17 +104,10 @@ public abstract class Tower : MonoBehaviour {
     {
         if (NextUpgrade != null)
         {
-            /**
-             * 
-             */
-            Debug.Log(string.Format("\nLevel: {0} \nDamage: {1} <color=#00ff00ff>+{4}</color> \nProc: {2}% <color=#00ff00ff>+{5}%</color> \nDebuff Duration: {3}sec <color=#00ff00ff>+{6}sec</color>", Level, Damage, Proc, DebuffDuration, NextUpgrade.Damage, NextUpgrade.ProcChance, NextUpgrade.DebuffDuration));
+            
             return string.Format("\nLevel: {0} \nDamage: {1} <color=#00ff00ff>+{4}</color> \nProc: {2}% <color=#00ff00ff>+{5}%</color> \nDebuff Duration: {3}sec <color=#00ff00ff>+{6}sec</color>", Level, Damage, Proc, DebuffDuration, NextUpgrade.Damage, NextUpgrade.ProcChance, NextUpgrade.DebuffDuration);
         }
-        /**
-         * 
-         */
-        Debug.Log(string.Format("\nLevel: {0} \nDamage: {1} \nProc: {2}% \nDebuff Duration: {3}sec", Level, Damage, Proc, DebuffDuration));
-        
+
         return string.Format("\nLevel: {0} \nDamage: {1} \nProc: {2}% \nDebuff Duration: {3}sec", Level, Damage, Proc, DebuffDuration);
     }
 

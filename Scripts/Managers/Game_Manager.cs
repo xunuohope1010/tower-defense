@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Bean;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -72,7 +73,13 @@ public class Game_Manager : Singleton<Game_Manager>
     // Use this for initialization
     void Start ()
     {
+        /*
+         * init lives
+         */
         Lives = 10;
+        /*
+         * init money
+         */
         Currency = 50;	
 	}
 	
@@ -88,6 +95,10 @@ public class Game_Manager : Singleton<Game_Manager>
         {
             ClickedBtn = towerBtn;
             Hover.Instance.Activate(towerBtn.Sprite);
+            /*
+             * send message: pick tower
+             */
+            OutputQueue.client.Send("pick tower");
         }
     }
 
@@ -97,6 +108,10 @@ public class Game_Manager : Singleton<Game_Manager>
         {
             Currency -= ClickedBtn.Price;
             Hover.Instance.Deactivate();
+            /*
+             * buy tower, send data
+             */
+            OutputQueue.client.Send("buy tower, money left: "+Currency);
         }
     }
 
@@ -211,10 +226,17 @@ public class Game_Manager : Singleton<Game_Manager>
                     type = "PurpleMonster";
                     break;
             }
-
+            /*
+             * create monster
+             */
             Monster monster = Pool.GetObject(type).GetComponent<Monster>();
 
             monster.Spawn(monsterHealth);
+            
+            /*
+            * send path of monster
+            */
+            OutputQueue.sendData();
 
             if (wave % 3 == 0)
             {

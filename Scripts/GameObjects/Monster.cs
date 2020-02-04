@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Bean;
 using UnityEngine;
 
 public class Monster : MonoBehaviour
@@ -52,6 +53,7 @@ public class Monster : MonoBehaviour
         StartCoroutine(Scale(minScale, maxScale, false));
 
         SetPath(LevelManager.Instance.Path);
+        
     }
 
     public IEnumerator Scale(Vector3 from, Vector3 to, bool remove)
@@ -74,6 +76,7 @@ public class Monster : MonoBehaviour
         {
             Game_Manager.Instance.Lives--;
             Release();
+            OutputQueue.client.Send("lives left: "+Game_Manager.Instance.Lives);
         }
     }
 

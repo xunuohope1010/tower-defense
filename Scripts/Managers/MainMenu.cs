@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Bean;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
@@ -26,9 +27,13 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        ClientControl client = new ClientControl();
-        client.Connect("127.0.0.1", 8080);
-        client.Send("game start!");
+        /*
+         * main scene
+         */
         SceneManager.LoadScene(1);
+        /*
+         * send message to python
+         */
+        OutputQueue.connect();
     }
 }
